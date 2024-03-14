@@ -35,7 +35,7 @@ const SearchForm = ({cache, onFinish}: PropType) => {
                 label="Type"
                 name="type"
             >
-                <Select allowClear >
+                <Select allowClear mode="multiple">
                     {
                         POKEMON_TYPES.map((type: string) => <Select.Option key={Math.random()} value={type}>{type}</Select.Option>)
                     }
@@ -44,7 +44,7 @@ const SearchForm = ({cache, onFinish}: PropType) => {
 
             <Form.Item wrapperCol={{ offset: 13, span: 16 }}>
                 <Button type="primary" htmlType="submit">
-                    Submit
+                    Search
                 </Button>
             </Form.Item>
         </Form>

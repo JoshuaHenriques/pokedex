@@ -16,10 +16,7 @@ export const PokedexPage = () => {
     const pokedex: PokedexClient = new PokedexClient()
 
     const handleFormSubmit = (data: FormInput) => {
-        const pokemon: Pokemon[] = pokedex.listPokemon({
-            name: data.name != "" ? data.name : undefined,
-            type: data.type
-        })
+        const pokemon: Pokemon[] = pokedex.listPokemon(data)
         saveCache({ ...data, pokemon })
         setPokemonList(pokemon)
     }
@@ -29,7 +26,7 @@ export const PokedexPage = () => {
         // If the dataset wasn't static, I would just cache the query and refetch the results instead
         // if (cache && (cache.name || cache.type)) {
         //     pokemon = pokedex.listPokemon({ name: cache.name, type: cache.type})
-        if (cache && cache.pokemon) {
+        if (cache && cache.pokemon && cache.pokemon.length > 0) {
             pokemon = cache.pokemon
         } else {
             pokemon = pokedex.listPokemon({})
@@ -43,7 +40,7 @@ export const PokedexPage = () => {
             <ContentWrapper>
                 <Row>
                     <Col span={16} offset={2}>
-                        <SearchForm onFinish={handleFormSubmit} cache={{ name: cache.name, type: cache.type }}/>
+                        <SearchForm onFinish={handleFormSubmit} cache={cache && { name: cache.name, type: cache.type }}/>
                     </Col>
                 </Row>
                 <Row>

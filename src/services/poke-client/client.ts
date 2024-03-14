@@ -1,3 +1,4 @@
+import { FormInput } from '../../types/FormInputType'
 import pokedata from './data/pokemon.json'
 
 export type Pokemon = typeof pokedata[number]
@@ -19,23 +20,23 @@ export class PokedexClient {
   /**
    * Returns a list of pokemon filtered by name and or type
    */
-  listPokemon({ name, type }: { name?: string, type?: string }): Pokemon[] {
+  listPokemon({ name, type }: FormInput): Pokemon[] {
     const pokemon: Pokemon[] = Array.from(this.pokedex.values())
-    
-    if (name) {
+
+    if (name && name !== "") {
       const lowerName = name.toLowerCase()
       return pokemon.filter((poke) => {
         const startsWith: boolean = poke.name.english.toLowerCase().startsWith(lowerName.slice(0, Math.max(poke.name.english.length - 1, 1)))
         
-        if (type) {
-          return startsWith && poke.type.includes(type)
+        if (type && type.length > 0) {
+          return startsWith && type.every(t => poke.type.includes(t))
         }
         
         return startsWith
       })
     } 
-    else if (!name && type) {
-      return pokemon.filter((poke) => poke.type.includes(type))
+    else if (!name && type && type.length > 0) {
+      return pokemon.filter((poke) => type.every(t => poke.type.includes(t)))
     } 
 
     return pokemon
