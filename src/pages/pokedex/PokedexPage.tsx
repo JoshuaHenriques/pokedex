@@ -9,11 +9,14 @@ import { ContentWrapper } from "../../components/ContentWrapper"
 import { Row, Col } from "antd"
 import { CacheType } from "../../types/CacheType"
 
-export const PokedexPage = () => {
+type PropTypes = {
+    pokedex: PokedexClient
+}
+
+export const PokedexPage = ({ pokedex }: PropTypes) => {
     const [pokemonList, setPokemonList] = useState<Pokemon[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [cache, saveCache] = useLocalStorage<CacheType>("cache", undefined)
-    const pokedex: PokedexClient = new PokedexClient()
 
     const handleFormSubmit = (data: FormInput) => {
         const pokemon: Pokemon[] = pokedex.listPokemon(data)
