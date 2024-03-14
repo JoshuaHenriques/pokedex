@@ -3,6 +3,7 @@ import { FormInput } from "../../../types/FormInputType"
 import React from "react"
 
 type PropType = {
+    cache?: FormInput,
     onFinish?: (data: FormInput) => void
 }
 
@@ -14,12 +15,13 @@ const compare = (prevProps: PropType, nextProps: PropType) => {
     return JSON.stringify(prevProps) === JSON.stringify(nextProps)
 }
 
-const SearchForm = ({onFinish}: PropType) => {
+const SearchForm = ({cache, onFinish}: PropType) => {
     return (
         <Form 
             name="search"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
+            initialValues={cache}
             onFinish={onFinish}
         >
             <Form.Item<FormInput>
