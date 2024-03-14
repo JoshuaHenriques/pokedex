@@ -22,7 +22,7 @@ const PokemonList = ({pokemon, loading}: PropType) => {
             renderItem={(item) => (
                 <List.Item>
                         <List.Item.Meta
-                            avatar={<Avatar src={item.image.thumbnail} />}
+                            avatar={<Avatar size={64} src={item.image.thumbnail} />}
                             title={<Link to={`/${item.name.english}`} rel="noopener noreferrer">{item.name.english} [{item.type.join(', ')}]</Link>}
                             description={item.description}
                         />
