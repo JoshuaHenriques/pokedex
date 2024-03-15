@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { PokedexClient, Pokemon } from "../../services/poke-client/client"
+import { Pokemon } from "../../services/poke-client/client"
 import PokemonList from "./components/PokemonList"
 import SearchForm from "./components/SearchForm"
 import { FormInput } from "../../types/FormInputType"
@@ -8,31 +8,25 @@ import { Layout } from "../../components/Layout"
 import { ContentWrapper } from "../../components/ContentWrapper"
 import { Row, Col } from "antd"
 import { CacheType } from "../../types/CacheType"
+import { Pokedex } from "../../App"
 
-type PropTypes = {
-    pokedex: PokedexClient
-}
-
-export const PokedexPage = ({ pokedex }: PropTypes) => {
+export const PokedexPage = () => {
     const [pokemonList, setPokemonList] = useState<Pokemon[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [cache, saveCache] = useLocalStorage<CacheType>("cache", undefined)
 
     const handleFormSubmit = (data: FormInput) => {
-        const pokemon: Pokemon[] = pokedex.listPokemon(data)
+        const pokemon: Pokemon[] = Pokedex.listPokemon(data)
         saveCache({ ...data, pokemon })
         setPokemonList(pokemon)
     }
 
     useEffect(() => {
         let pokemon: Pokemon[]
-        // If the dataset wasn't static, I would just cache the query and refetch the results instead
-        // if (cache && (cache.name || cache.type)) {
-        //     pokemon = pokedex.listPokemon({ name: cache.name, type: cache.type})
         if (cache && cache.pokemon && cache.pokemon.length > 0) {
             pokemon = cache.pokemon
         } else {
-            pokemon = pokedex.listPokemon({})
+            pokemon = Pokedex.listPokemon({})
         }
         setPokemonList(pokemon)
         setLoading(false)

@@ -1,22 +1,19 @@
 import { useEffect, useState } from "react"
-import { PokedexClient, Pokemon } from "../../services/poke-client/client"
+import { Pokemon } from "../../services/poke-client/client"
 import { Link, useParams } from "react-router-dom";
 import { Col, Image, Row } from "antd";
 import { CloseOutlined  } from '@ant-design/icons'
 import { ContentWrapper } from "../../components/ContentWrapper";
 import { Layout } from "../../components/Layout";
+import { Pokedex } from "../../App";
 
-type PropTypes = {
-    pokedex: PokedexClient
-}
-
-export const PokemonPage = ({ pokedex }: PropTypes) => {
+export const PokemonPage = () => {
     const [pokemon, setPokemon] = useState<Pokemon|undefined>(undefined)    
     const { name } = useParams<{name: string}>();
 
     useEffect(() => {
         if (name) {
-            const data: Pokemon|undefined = pokedex.getPokemonByName(name)
+            const data: Pokemon|undefined = Pokedex.getPokemonByName(name)
             setPokemon(data)
         }
     }, [])

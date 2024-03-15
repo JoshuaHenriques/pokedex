@@ -3,13 +3,14 @@ import { PokemonPage } from './pages/pokemon/PokemonPage';
 import { Routes, Route } from 'react-router-dom';
 import { PokedexClient } from './services/poke-client/client';
 
+export const Pokedex: PokedexClient = new PokedexClient()
+
 function App() {
-  const pokedex: PokedexClient = new PokedexClient()
   
   return (
     <Routes>
-      <Route path="/" element={<PokedexPage pokedex={pokedex} />}/>
-      <Route path="/:name" element={<PokemonPage pokedex={pokedex} />} />
+      <Route path="/" element={<PokedexPage />}/>
+      <Route path="/:name" element={<PokemonPage />} />
     </Routes>
   );
 }
